@@ -21,7 +21,7 @@ sidebar:
 ## Goal for today
 
 ## What I did
-<!-- commands I ran, in order, as code blocks -->
+<!-- commands I ran, in order, as code blocks, each followed by > 🟢 **VIEW** · AI prompt: "..." -->
 
 ## What broke and how I fixed it
 | Problem | Cause | Fix |
@@ -30,8 +30,8 @@ sidebar:
 ## What I learned (in my own words)
 
 ## Commands I learned
-| Command | What it does | AI tip (ask Claude) |
-| --- | --- | --- |
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
 
 ## Questions / still unclear
 

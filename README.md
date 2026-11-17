@@ -12,12 +12,20 @@ Built with [Astro Starlight](https://starlight.astro.build) and hosted as a stat
 src/content/docs/
 ├── index.mdx       # Home page
 ├── days/           # One page per practice day (newest first)
-├── use-cases/      # Practical Railway tasks: syntax, real example, AI tip
+├── use-cases/      # Practical Railway tasks: syntax, real example, color type, AI prompt
 ├── cheatsheet/     # Railway CLI, Git, troubleshooting (error → cause → fix)
 └── projects/       # Real apps I study
 ```
 
-Pages are added only after I've actually practiced something. Every command comes with an **AI tip**: a plain-English request to give Claude to run it.
+Pages are added only after I've actually practiced something. Every command comes with a **color type** and an **AI prompt** (a plain-English request to give Claude to run it):
+
+| Color | Type | Like HTTP | Meaning |
+| --- | --- | --- | --- |
+| 🟢 | VIEW | GET | Only looks. Safe anytime. |
+| 🔵 | CREATE | POST | Makes something new. |
+| 🟡 | EDIT | PATCH | Changes one part of something. |
+| 🟠 | UPDATE | PUT | Replaces, redeploys or syncs as a whole. |
+| 🔴 | DELETE | DELETE | Removes or stops something. Can't be undone; Claude warns first. |
 
 ## Commands
 

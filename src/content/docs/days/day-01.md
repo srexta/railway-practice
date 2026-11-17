@@ -8,6 +8,26 @@ sidebar:
 A beginner's study guide to the ten concepts every server error message assumes you know.
 Study time: **2–3 days at ~2 hours/day**. Everything below runs on your own laptop; no Railway account needed yet.
 
+### Command colors
+
+Every command here has a color type and an **AI prompt**, the plain-English request I give Claude to run it.
+
+| Color | Type | Like HTTP | Meaning |
+| --- | --- | --- | --- |
+| 🟢 | **VIEW** | GET | Only looks. Changes nothing. Safe anytime. |
+| 🔵 | **CREATE** | POST | Makes something new: a file, process, container or row. |
+| 🟡 | **EDIT** | PATCH | Changes one part of something that exists. |
+| 🟠 | **UPDATE** | PUT | Replaces, redeploys or syncs something as a whole. |
+| 🔴 | **DELETE** | DELETE | Removes, stops or discards. **Can't be undone.** Claude warns me first. |
+
+Do the exercises in a practice folder **outside** this site's repo:
+
+```bash
+mkdir -p ~/playground/day01 && cd ~/playground/day01
+```
+
+> 🔵 **CREATE** · AI prompt: "Make a practice folder ~/playground/day01 and move into it"
+
 > **Commands in this file** work on macOS and Linux. On Windows, install **WSL** (Windows Subsystem for Linux) first (`wsl --install` in PowerShell as admin) and run everything inside the Ubuntu terminal it gives you.
 
 ---
@@ -23,9 +43,13 @@ Study time: **2–3 days at ~2 hours/day**. Everything below runs on your own la
 | `dig` / `nslookup` | Look up DNS (preinstalled on macOS/Linux) | `dig -v` |
 | `psql` | Postgres client; Railway's `connect` needs it | `psql --version` |
 
+> 🟢 **VIEW** · AI prompt: "Check which of these tools are installed: git, node, docker, curl, dig, psql"
+
 Install `psql`:
 - macOS: `brew install libpq && brew link --force libpq`
 - Ubuntu/WSL: `sudo apt install postgresql-client`
+
+> 🔵 **CREATE** · AI prompt: "Install the psql client on my Mac"
 
 ---
 
@@ -67,26 +91,26 @@ The **terminal** is a text window. The **shell** (bash, zsh) is the program insi
 - **Redirects** `>` (overwrite file), `>>` (append to file).
 
 ### Commands to learn
-```bash
-pwd                      # where am I?
-ls -la                   # list files, including hidden ones (like .env)
-cd ~/projects            # move into a folder
-cd ..                    # go up one level
-mkdir playground         # make a folder
-touch notes.md           # make an empty file
-cat notes.md             # print a file
-less bigfile.log         # scroll a big file (q to quit)
-head -n 20 file.log      # first 20 lines
-tail -n 20 file.log      # last 20 lines
-tail -f file.log         # follow a file live (Ctrl+C to stop)
-grep "error" file.log    # find lines containing "error"
-cp a.txt b.txt           # copy
-mv a.txt old/a.txt       # move/rename
-rm b.txt                 # delete (no recycle bin — careful!)
-which node               # where is this program installed?
-history                  # commands you've run
-man ls                   # manual page for a command (q to quit)
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `pwd` | 🟢 VIEW | Shows which folder I'm in | "Which folder am I in?" |
+| `ls -la` | 🟢 VIEW | Lists files, including hidden ones like `.env` | "List all files here, including hidden ones" |
+| `cd ~/projects` | 🟢 VIEW | Moves into a folder | "Go into my projects folder" |
+| `cd ..` | 🟢 VIEW | Goes up one folder | "Go up one folder" |
+| `mkdir playground` | 🔵 CREATE | Makes a folder | "Make a folder called playground" |
+| `touch notes.md` | 🔵 CREATE | Makes an empty file | "Create an empty notes.md" |
+| `cat notes.md` | 🟢 VIEW | Prints a file | "Show me what's in notes.md" |
+| `less bigfile.log` | 🟢 VIEW | Scrolls a big file (`q` to quit) | "Let me scroll through bigfile.log" |
+| `head -n 20 file.log` | 🟢 VIEW | First 20 lines | "Show the first 20 lines of file.log" |
+| `tail -n 20 file.log` | 🟢 VIEW | Last 20 lines | "Show the last 20 lines of file.log" |
+| `tail -f file.log` | 🟢 VIEW | Follows a file live (Ctrl+C to stop) | "Watch file.log live as new lines arrive" |
+| `grep "error" file.log` | 🟢 VIEW | Finds lines containing "error" | "Find every line with 'error' in file.log" |
+| `cp a.txt b.txt` | 🔵 CREATE | Copies a file (**overwrites** `b.txt` if it exists) | "Copy a.txt to b.txt" |
+| `mv a.txt old/a.txt` | 🟡 EDIT | Moves or renames a file | "Move a.txt into the old folder" |
+| `rm b.txt` | 🔴 DELETE | Deletes a file. No recycle bin! | "Delete b.txt" |
+| `which node` | 🟢 VIEW | Shows where a program is installed | "Where is node installed?" |
+| `history` | 🟢 VIEW | Lists commands I've run | "Show my recent commands" |
+| `man ls` | 🟢 VIEW | Opens the manual for a command (`q` to quit) | "Explain the ls command and its options" |
 
 ### Keyboard shortcuts
 - `Tab` — autocomplete file and command names
@@ -119,20 +143,21 @@ When a process ends, it returns an **exit code**: `0` means success, anything el
 - `SIGKILL` — "stop now", can't be ignored
 
 ### Commands to learn
-```bash
-ps aux                   # all running processes
-ps aux | grep node       # only node processes
-top                      # live CPU/memory view (q to quit); try `htop` if installed
-kill 12345               # send SIGTERM to PID 12345
-kill -9 12345            # send SIGKILL (last resort)
-echo $?                  # exit code of the last command
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `ps aux` | 🟢 VIEW | Lists all running processes | "Show all running processes" |
+| `ps aux \| grep node` | 🟢 VIEW | Only the node processes | "Show me every running node process" |
+| `top` | 🟢 VIEW | Live CPU/memory view (`q` to quit) | "What's using the most CPU and memory right now?" |
+| `kill 12345` | 🔴 DELETE | Asks process 12345 to stop (SIGTERM) | "Stop process 12345 gracefully" |
+| `kill -9 12345` | 🔴 DELETE | Force-stops process 12345 (SIGKILL), last resort | "Force-kill process 12345" |
+| `echo $?` | 🟢 VIEW | Exit code of the last command | "What was the exit code of the last command?" |
 
 ### ✅ What you can do
 1. Start a process that runs forever:
    ```bash
    node -e "console.log('pid', process.pid); setInterval(()=>{}, 1000)"
    ```
+   > 🔵 **CREATE** · AI prompt: "Start a node process that runs forever and prints its PID"
    In a **second terminal**, find it with `ps aux | grep node`, then `kill <pid>`. Watch the first terminal stop.
 2. Exit codes:
    ```bash
@@ -140,6 +165,7 @@ echo $?                  # exit code of the last command
    node -e "process.exit(1)"; echo $?   # 1
    ls /does-not-exist; echo $?          # non-zero
    ```
+   > 🟢 **VIEW** · AI prompt: "Run a command that succeeds and one that fails, and show me their exit codes"
 3. Graceful shutdown — save as `graceful.js` and run it, then press Ctrl+C or `kill <pid>` from another terminal:
    ```js
    console.log('started, pid', process.pid);
@@ -152,6 +178,8 @@ echo $?                  # exit code of the last command
    process.on('SIGTERM', () => stop('SIGTERM'));
    process.on('SIGINT', () => stop('SIGINT'));
    ```
+   > 🔵 **CREATE** · AI prompt: "Create graceful.js that shuts down cleanly on Ctrl+C or SIGTERM, and run it"
+
    This is exactly the pattern your apps need on Railway so deploys don't cut off requests.
 
 ### Example 1: a real mini web server
@@ -166,7 +194,7 @@ Think of it as opening a tiny shop: the port is the door, a request is a custome
 node -e "require('http').createServer((q,s)=>{console.log(q.url);s.end('hi\n')}).listen(3000)"
 ```
 
-> AI tip: "Start a tiny Node web server on port 3000 that replies 'hi'"
+> 🔵 **CREATE** · AI prompt: "Start a tiny Node web server on port 3000 that replies 'hi'"
 
 Nothing prints and the prompt doesn't come back. That's normal: the server is running and waiting.
 
@@ -176,7 +204,7 @@ Nothing prints and the prompt doesn't come back. That's normal: the server is ru
 curl localhost:3000
 ```
 
-> AI tip: "Send a request to my local server on port 3000"
+> 🟢 **VIEW** · AI prompt: "Send a request to my local server on port 3000"
 
 It printed `hi`. Terminal 1 printed `/`, the server logging my visit. `localhost` means "this same computer".
 
@@ -186,7 +214,7 @@ It printed `hi`. Terminal 1 printed `/`, the server logging my visit. `localhost
 lsof -i :3000
 ```
 
-> AI tip: "Which process is using port 3000?"
+> 🟢 **VIEW** · AI prompt: "Which process is using port 3000?"
 
 The `PID` column is the server's process ID, the number the computer gives every running program.
 
@@ -197,7 +225,7 @@ kill <PID>
 curl localhost:3000
 ```
 
-> AI tip: "Stop the process on port 3000 and check it's gone"
+> 🔴 **DELETE** · AI prompt: "Stop the process on port 3000 and check it's gone"
 
 The second curl fails with `Connection refused`, which means nobody is behind that door anymore. On a real server, this error usually means the app crashed or isn't running.
 
@@ -232,11 +260,11 @@ One computer has one IP address but runs many programs. **Ports** (numbers 0–6
 > ⚠️ The #1 Railway beginner bug: an app listening on `127.0.0.1` or a hard-coded port. On Railway your app must listen on the port in the `PORT` environment variable, on `0.0.0.0`/`::`.
 
 ### Commands to learn
-```bash
-lsof -i :3000            # what's using port 3000? (macOS/Linux)
-lsof -i -P | grep LISTEN # everything listening
-nc -zv localhost 5432    # is anything listening on 5432?
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `lsof -i :3000` | 🟢 VIEW | What's using port 3000? | "Which process is using port 3000?" |
+| `lsof -i -P \| grep LISTEN` | 🟢 VIEW | Everything that's listening on a port | "Show everything listening on a port" |
+| `nc -zv localhost 5432` | 🟢 VIEW | Is anything listening on 5432? | "Is anything running on port 5432?" |
 
 ### ✅ What you can do
 1. Save as `server.js`:
@@ -249,6 +277,8 @@ nc -zv localhost 5432    # is anything listening on 5432?
    }).listen(port, '::', () => console.log('listening on', port));
    ```
    Run `node server.js`, open `http://localhost:3000`.
+
+   > 🔵 **CREATE** · AI prompt: "Create server.js that reads PORT from the environment, and start it"
 2. Run it again in a second terminal **at the same time**. Read the error (`EADDRINUSE`) — two processes can't use one port.
 3. Run `PORT=4000 node server.js` and open port 4000. You just configured a port from outside the code.
 4. Use `lsof -i :3000` to find the process holding the port, then stop it with `kill`.
@@ -289,15 +319,17 @@ A **response** has a **status code**, headers and a body.
 **Proxy:** a server that sits in front of your app and forwards requests. Railway's edge is a proxy. It adds headers like `X-Forwarded-For` (real visitor IP) and `X-Forwarded-Proto` (was it https?). Your app must "trust the proxy" to read them.
 
 ### Commands to learn
-```bash
-curl https://example.com                 # get the body
-curl -I https://example.com              # headers only
-curl -v https://example.com              # everything, including the TLS handshake
-curl -L http://github.com                # follow redirects
-curl -X POST -H "Content-Type: application/json" \
-     -d '{"name":"Sagar"}' http://localhost:3000/hello
-curl -o /dev/null -s -w "%{http_code} %{time_total}s\n" https://example.com   # status + time
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `curl https://example.com` | 🟢 VIEW | GET: fetches the page body | "Fetch example.com" |
+| `curl -I https://example.com` | 🟢 VIEW | Headers only | "Show only the headers from example.com" |
+| `curl -v https://example.com` | 🟢 VIEW | Everything, including the TLS handshake | "Show the full request and response for example.com" |
+| `curl -L http://github.com` | 🟢 VIEW | Follows redirects | "Fetch github.com over http and follow the redirect" |
+| `curl -X POST -H "Content-Type: application/json" -d '{"name":"Sagar"}' localhost:3000/hello` | 🔵 CREATE | POST: sends JSON to create something | "Send a POST to /hello with name Sagar as JSON" |
+| `curl -X PATCH -H "Content-Type: application/json" -d '{"name":"Sagar K"}' localhost:3000/users/1` | 🟡 EDIT | PATCH: changes one field of user 1 | "Change user 1's name to Sagar K with a PATCH" |
+| `curl -X PUT -H "Content-Type: application/json" -d '{"name":"Sagar K","city":"Kathmandu"}' localhost:3000/users/1` | 🟠 UPDATE | PUT: replaces user 1 completely | "Replace user 1 with a PUT request" |
+| `curl -X DELETE localhost:3000/users/1` | 🔴 DELETE | DELETE: removes user 1 | "Delete user 1 with a DELETE request" |
+| `curl -o /dev/null -s -w "%{http_code} %{time_total}s\n" https://example.com` | 🟢 VIEW | Just the status code and response time | "What status code does example.com return, and how fast?" |
 
 ### ✅ What you can do
 1. `curl -I http://github.com` — see the 301 redirect to https.
@@ -309,6 +341,8 @@ curl -o /dev/null -s -w "%{http_code} %{time_total}s\n" https://example.com   # 
    if (req.url !== '/') { res.statusCode = 404; return res.end('not found\n'); }
    ```
    Test each with `curl -i`.
+
+   > 🟡 **EDIT** · AI prompt: "Make server.js return 404 for unknown paths and 500 on /boom, then test both with curl"
 
 ---
 
@@ -334,17 +368,17 @@ curl -o /dev/null -s -w "%{http_code} %{time_total}s\n" https://example.com   # 
 On Railway you'll mostly add a **CNAME** (pointing your domain at Railway) and sometimes a **TXT** (to prove you own it).
 
 ### Commands to learn
-```bash
-dig example.com                 # full answer
-dig +short example.com          # just the IP
-dig +short AAAA example.com     # IPv6
-dig +short CNAME www.github.com
-dig +short MX gmail.com
-dig +short TXT google.com
-dig +short NS railway.com
-dig @1.1.1.1 example.com        # ask a specific resolver (Cloudflare)
-nslookup example.com            # alternative tool (also on Windows)
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `dig example.com` | 🟢 VIEW | Full DNS answer | "Look up the DNS for example.com" |
+| `dig +short example.com` | 🟢 VIEW | Just the IP (A record) | "What IP does example.com point to?" |
+| `dig +short AAAA example.com` | 🟢 VIEW | IPv6 address | "What's the IPv6 address of example.com?" |
+| `dig +short CNAME www.github.com` | 🟢 VIEW | Alias (CNAME) | "Is www.github.com a CNAME? Where does it point?" |
+| `dig +short MX gmail.com` | 🟢 VIEW | Mail servers | "Which mail servers does gmail.com use?" |
+| `dig +short TXT google.com` | 🟢 VIEW | Text records (verification, SPF) | "Show the TXT records for google.com" |
+| `dig +short NS railway.com` | 🟢 VIEW | Which DNS provider runs the domain | "Who hosts the DNS for railway.com?" |
+| `dig @1.1.1.1 example.com` | 🟢 VIEW | Ask a specific resolver (Cloudflare) | "Look up example.com using Cloudflare's 1.1.1.1" |
+| `nslookup example.com` | 🟢 VIEW | Alternative lookup tool (also on Windows) | "Look up example.com with nslookup" |
 
 ### ✅ What you can do
 1. Look up A, AAAA, MX, TXT and NS for a domain your company owns (e.g. one of your client sites). Write down which DNS provider hosts it (the NS records tell you).
@@ -370,11 +404,10 @@ Railway issues and renews certificates for you once your DNS points correctly. Y
 | "Mixed content" warnings | Page loads some images/scripts over `http://` |
 
 ### Commands to learn
-```bash
-curl -vI https://example.com 2>&1 | grep -iE "subject|issuer|expire"
-echo | openssl s_client -connect example.com:443 -servername example.com 2>/dev/null \
-  | openssl x509 -noout -subject -issuer -dates
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `curl -vI https://example.com 2>&1 \| grep -iE "subject\|issuer\|expire"` | 🟢 VIEW | Who issued the certificate and when it expires | "Check the SSL certificate for example.com" |
+| `echo \| openssl s_client -connect example.com:443 -servername example.com 2>/dev/null \| openssl x509 -noout -subject -issuer -dates` | 🟢 VIEW | Same info, straight from the certificate | "Show the certificate issuer and expiry dates for example.com" |
 
 ### ✅ What you can do
 1. Click the padlock on three sites you manage. Note the issuer and expiry date.
@@ -403,13 +436,13 @@ Why this matters: the **same code** runs on your laptop, staging and production 
 - Apps should **fail loudly at start-up** if a required variable is missing.
 
 ### Commands to learn
-```bash
-env                            # all variables in this shell
-echo $HOME                     # one variable
-export GREETING=hello          # set for this shell session
-GREETING=hi node app.js        # set only for one command
-unset GREETING                 # remove
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `env` | 🟢 VIEW | All variables in this shell | "Show my environment variables" |
+| `echo $HOME` | 🟢 VIEW | One variable | "What's the value of HOME?" |
+| `export GREETING=hello` | 🔵 CREATE | Sets a variable for this terminal session | "Set GREETING to hello for this session" |
+| `GREETING=hi node app.js` | 🔵 CREATE | Starts the app with a variable for that run only | "Run app.js with GREETING set to hi" |
+| `unset GREETING` | 🔴 DELETE | Removes a variable | "Remove the GREETING variable" |
 
 Reading them in code:
 ```js
@@ -456,14 +489,14 @@ On a server you can't watch the screen, so these streams are collected as **logs
 - When reading logs, start **from the top** of the error, not the last line.
 
 ### Commands to learn
-```bash
-node server.js > out.log 2> err.log    # split stdout and stderr into files
-node server.js > all.log 2>&1          # both into one file
-node server.js 2>&1 | tee all.log      # see it live AND save it
-tail -f all.log                        # follow a log live
-grep -i error all.log                  # find errors
-grep -c "GET /" all.log                # count requests
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `node server.js > out.log 2> err.log` | 🔵 CREATE | Runs the server, normal output → `out.log`, errors → `err.log` (**overwrites** both) | "Run server.js and save normal output and errors to separate files" |
+| `node server.js > all.log 2>&1` | 🔵 CREATE | Both streams into one file | "Run server.js and save all output to all.log" |
+| `node server.js 2>&1 \| tee all.log` | 🔵 CREATE | Shows output live **and** saves it | "Run server.js, show the output and save it to all.log" |
+| `tail -f all.log` | 🟢 VIEW | Follows a log live | "Watch all.log live" |
+| `grep -i error all.log` | 🟢 VIEW | Finds errors | "Find all errors in all.log" |
+| `grep -c "GET /" all.log` | 🟢 VIEW | Counts requests | "How many GET requests are in all.log?" |
 
 ### ✅ What you can do
 1. Add `console.error('something bad')` to `server.js` on the `/boom` route. Run with `> out.log 2> err.log`, hit `/` and `/boom` with curl, then check which file each line landed in.
@@ -472,6 +505,7 @@ grep -c "GET /" all.log                # count requests
    ```bash
    for i in $(seq 1 20); do curl -s localhost:3000/ > /dev/null; done
    ```
+   > 🟢 **VIEW** · AI prompt: "Send 20 requests to my local server"
 
 ---
 
@@ -490,19 +524,19 @@ Key properties:
 - Config goes in through **environment variables** (`-e`).
 
 ### Commands to learn
-```bash
-docker run hello-world                        # first test
-docker run -d -p 8080:80 --name web nginx     # run nginx in the background
-docker ps                                     # running containers
-docker ps -a                                  # including stopped ones
-docker logs web                               # its stdout/stderr
-docker logs -f web                            # follow live
-docker exec -it web sh                        # shell INSIDE the container
-docker stop web && docker rm web              # stop and remove
-docker images                                 # local images
-docker build -t myapp .                       # build an image from a Dockerfile
-docker run -p 3000:3000 -e PORT=3000 myapp    # run your image
-```
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `docker run hello-world` | 🔵 CREATE | First test: runs a tiny container | "Run Docker's hello-world test" |
+| `docker run -d -p 8080:80 --name web nginx` | 🔵 CREATE | Starts nginx in the background on port 8080 | "Start an nginx container called web on port 8080" |
+| `docker ps` | 🟢 VIEW | Running containers | "Which containers are running?" |
+| `docker ps -a` | 🟢 VIEW | Including stopped ones | "List all containers, including stopped ones" |
+| `docker logs web` | 🟢 VIEW | A container's stdout/stderr | "Show the logs of the web container" |
+| `docker logs -f web` | 🟢 VIEW | Follows them live | "Follow the web container's logs live" |
+| `docker exec -it web sh` | 🟢 VIEW | Opens a shell **inside** the container | "Open a shell inside the web container" |
+| `docker stop web && docker rm web` | 🔴 DELETE | Stops and removes the container | "Stop and remove the web container" |
+| `docker images` | 🟢 VIEW | Images on my machine | "List my Docker images" |
+| `docker build -t myapp .` | 🔵 CREATE | Builds an image from the Dockerfile here | "Build a Docker image called myapp from this folder" |
+| `docker run -p 3000:3000 -e PORT=3000 myapp` | 🔵 CREATE | Runs my image on port 3000 | "Run my myapp image on port 3000" |
 
 ### ✅ What you can do
 1. Run nginx, open `localhost:8080`, read its logs with `docker logs`, then go inside with `docker exec -it web sh` and run `ls /usr/share/nginx/html`.
@@ -521,6 +555,7 @@ docker run -p 3000:3000 -e PORT=3000 myapp    # run your image
    docker run -p 3000:3000 hello-server
    docker run -p 4000:5000 -e PORT=5000 hello-server   # map host 4000 → container 5000
    ```
+   > 🔵 **CREATE** · AI prompt: "Build my server into a Docker image called hello-server and run it on port 3000"
    Explain to yourself why the second command works on `localhost:4000`.
 4. Stop the container with `docker stop` and watch whether your SIGTERM handler (Section 3) runs.
 
@@ -553,6 +588,11 @@ docker run -d --name pg -e POSTGRES_PASSWORD=dev -p 5432:5432 -v pgdata:/var/lib
 psql postgresql://postgres:dev@localhost:5432/postgres
 ```
 
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `docker run -d --name pg ... postgres:16` | 🔵 CREATE | Starts a local Postgres with a `pgdata` volume | "Start a local Postgres 16 in Docker with a volume" |
+| `psql postgresql://postgres:dev@localhost:5432/postgres` | 🟢 VIEW | Connects to the database | "Connect to my local Postgres" |
+
 Inside `psql`:
 ```sql
 \l                         -- list databases
@@ -569,11 +609,26 @@ SHOW max_connections;
 SELECT count(*) FROM pg_stat_activity;   -- current connections
 ```
 
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `\l`, `\dt`, `\d bookings` | 🟢 VIEW | List databases, list tables, describe a table | "Show the tables in my database" |
+| `CREATE TABLE bookings (...)` | 🔵 CREATE | Makes a new table | "Create a bookings table with id, name and created_at" |
+| `INSERT INTO bookings ...` | 🔵 CREATE | Adds rows (like POST) | "Add two bookings: Sagar and Sudin" |
+| `SELECT * FROM bookings` | 🟢 VIEW | Reads rows (like GET) | "Show all bookings" |
+| `UPDATE bookings SET name = ... WHERE id = 1` | 🟡 EDIT | Changes part of a row (like PATCH) | "Rename booking 1 to Sagar K" |
+| `DELETE FROM bookings WHERE id = 2` | 🔴 DELETE | Removes rows. **Forgetting `WHERE` deletes every row.** | "Delete booking 2" |
+| `SHOW max_connections` / `SELECT count(*) FROM pg_stat_activity` | 🟢 VIEW | Connection limit / connections in use | "How many database connections are in use?" |
+
 Backup and restore:
 ```bash
 pg_dump  postgresql://postgres:dev@localhost:5432/postgres -Fc -f backup.dump
 pg_restore --clean -d postgresql://postgres:dev@localhost:5432/postgres backup.dump
 ```
+
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
+| `pg_dump ... -Fc -f backup.dump` | 🔵 CREATE | Saves a backup file | "Back up my local Postgres to backup.dump" |
+| `pg_restore --clean ... backup.dump` | 🔴 DELETE | **Wipes** the current data, then restores the backup | "Restore my local Postgres from backup.dump" |
 
 ### ✅ What you can do
 1. Start Postgres in Docker, create the `bookings` table, insert 5 rows.

@@ -9,10 +9,13 @@ Log this session into the site. Only record what the user **actually learned and
 
 **Never use "Stage N" names on the site.** Organise by days and use cases.
 
-**AI tips:** the user runs commands through Claude, so every command gets an AI tip — a short plain-English request that would make Claude run it, e.g. `railway logs -n 100` → *"Show me the last 100 lines of my app's logs"*. In tables use `Command | What it does | AI tip (ask Claude)`; under code blocks add a `> AI tip: "…"` line. Base the tip on how the user actually phrased the request when possible.
+**Color type + AI prompt on every command** (see "Command colors" in `CLAUDE.md`): 🟢 VIEW (GET, only looks) · 🔵 CREATE (POST, makes something new) · 🟡 EDIT (PATCH, changes part) · 🟠 UPDATE (PUT, replaces/redeploys/syncs as a whole) · 🔴 DELETE (removes/stops, can't be undone).
+- Tables: `| Command | Type | What it does | AI prompt |`, Type like `🔴 DELETE`.
+- Under code blocks: `> 🔴 **DELETE** · AI prompt: "Stop the process on port 3000"`.
+- The AI prompt is a short plain-English request that would make Claude run the command. Base it on how the user actually phrased the request when possible.
 
 1. **Day page.** Look in `src/content/docs/days/` for a `day-NN.md` whose `date:` is today. If none exists, run `npm run new-day` and fill in its title (`Day NN — <what I practiced>`), description and `tags`. Then add to it (keep existing content):
-   - *What I did*: numbered steps, exact commands as `bash` code blocks with AI tips. Redact secrets (`postgresql://user:****@host:5432/db`).
+   - *What I did*: numbered steps, exact commands as `bash` code blocks, each with its color type and AI prompt. Redact secrets (`postgresql://user:****@host:5432/db`).
    - *What broke and how I fixed it*: one row per problem.
    - *What I learned*: plain English, first person, short.
    - *Commands I learned*: one row per new command.
@@ -21,10 +24,10 @@ Log this session into the site. Only record what the user **actually learned and
    - Frontmatter: `title` (the task, in plain words), `description`.
    - *When I need this*: one or two sentences.
    - *Syntax*: the general command form, e.g. `railway variable set KEY=value [--service <name>]`.
-   - *Example*: the real command(s) from the user's practice, redacted, with the output trimmed to what matters, plus an AI tip.
+   - *Example*: the real command(s) from the user's practice, redacted, with the output trimmed to what matters, plus its color type and AI prompt.
    - *Gotchas*: what broke, if anything.
    - *Learned on*: links to the day pages.
-3. **Railway commands** actually run → add a row (with AI tip) to `src/content/docs/cheatsheet/railway-cli.md`, under a group heading (create the heading only when its first command arrives). Skip commands already listed.
+3. **Railway commands** actually run → add a row (with color type and AI prompt) to `src/content/docs/cheatsheet/railway-cli.md`, under a group heading (create the heading only when its first command arrives). Skip commands already listed.
 4. **Errors hit** → add a row to `src/content/docs/cheatsheet/troubleshooting.md` (create the table on the first error): `Error / symptom | Cause | Fix | Day`.
 5. Run `npm run build` and confirm it succeeds.
 6. Show the user a 2–3 line summary of what was logged. Commit as `day NN: <what I learned>` only if the user has asked for commits this session.

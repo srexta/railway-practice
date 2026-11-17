@@ -17,13 +17,36 @@ Context for Claude Code in this repo. Read it at the start of every session.
 - Keep the site's tone like a personal notebook: what I did, what broke, how I fixed it, what I learned.
 - **Track everything, every session, without being asked.** As we work, write it into the md files:
   - today's `days/day-NN.md` (create it with `npm run new-day` if missing): commands run, what broke, fixes, what I learned;
-  - each practical task I complete → a `use-cases/<task>.md` page (syntax + real example + AI tip), created or extended;
+  - each practical task I complete → a `use-cases/<task>.md` page (syntax + real example + color type + AI prompt), created or extended;
   - every new `railway` command → `cheatsheet/railway-cli.md`;
   - every error → `cheatsheet/troubleshooting.md` (error → cause → fix).
   **Only log what I learned about servers and Railway.** Never write about building this site, the repo, Claude setup, npm/Astro/Cloudflare tooling, or commits. That work happens but stays off the site.
-  **I run my commands through Claude.** Every command logged on the site gets an **AI tip**: a short plain-English request I could give Claude to run it (e.g. `railway logs -n 100` → *"Show me the last 100 lines of my app's logs"*). Command tables use the columns `Command | What it does | AI tip (ask Claude)`; for code blocks, put a `> AI tip:` line under the block.
+  **I run my commands through Claude.** Every command on the site gets a **color type** and an **AI prompt**. See "Command colors" below.
   **Only publish what I've actually practiced.** No pre-filled guides, placeholder pages, empty command groups or future checklists on the site. A day page, use-case page or cheatsheet row appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/` (Day 01 — Server basics is the accepted exception). Never organise the site by "Stage N"; use days and use cases.
   Update the logs at the end of each task, not only at the end of the session.
+
+## Command colors (always use these)
+
+Every command I run or learn is one of five types, named after HTTP methods:
+
+| Color | Type | Like HTTP | Meaning | Examples |
+| --- | --- | --- | --- | --- |
+| 🟢 | **VIEW** | GET | Only looks. Changes nothing. Safe anytime. | `ls`, `git status`, `railway logs`, `curl`, `SELECT` |
+| 🔵 | **CREATE** | POST | Makes something new (file, process, container, commit, service). | `mkdir`, `git commit`, `docker run`, `railway add`, `INSERT` |
+| 🟡 | **EDIT** | PATCH | Changes one part of something that exists. | `mv`, `git config`, `railway variable set`, SQL `UPDATE` |
+| 🟠 | **UPDATE** | PUT | Replaces, redeploys or syncs something as a whole. | `git push`, `git pull`, `railway up`, `railway redeploy` |
+| 🔴 | **DELETE** | DELETE | Removes, stops or discards. Can't be undone. | `rm`, `kill`, `git restore`, `docker rm`, `railway down`, SQL `DELETE` |
+
+**On the site**, every command gets its type and an AI prompt (a plain-English request I can give Claude to run it):
+- Tables: `| Command | Type | What it does | AI prompt |`, with Type written as `🔴 DELETE`.
+- Code blocks: a line under the block: `> 🔴 **DELETE** · AI prompt: "Stop the process on port 3000"`.
+
+**When Claude runs a command for me**, it says the type first, e.g. `🟢 VIEW: checking what's on port 3000`.
+For any 🔴 DELETE command, Claude **stops first** and shows:
+
+> ⚠️ 🔴 **DESTRUCTIVE COMMAND**: `<command>`. This will <what gets removed or lost>, and it can't be undone. Proceed?
+
+Then it waits for my explicit yes. (`.claude/hooks/guard.sh` also enforces this with a permission prompt.)
 
 ## Site structure
 
@@ -33,13 +56,13 @@ src/content/docs/
 ├── days/                     # One page per practice day (sidebar: newest first)
 ├── use-cases/                # One page per practical Railway task, e.g. deploy-node-app.md, add-postgres.md
 ├── cheatsheet/
-│   ├── railway-cli.md        # Every railway command I've used, grouped, with AI tips
+│   ├── railway-cli.md        # Every railway command I've used, grouped, with color types and AI prompts
 │   └── troubleshooting.md    # Error → cause → fix, filled in as I hit them
 └── projects/                 # Real apps I study (only what I've looked at)
 ```
 
 - **days/** is raw and chronological: what I practiced today.
-- **use-cases/** is refined how-to notes by task, built from the days: what it's for, the command syntax, a real example from my practice, AI tips, gotchas.
+- **use-cases/** is refined how-to notes by task, built from the days: what it's for, the command syntax, a real example from my practice, color types and AI prompts, gotchas.
 - **cheatsheet/** is quick lookup.
 
 Sidebar groups, in order: Start here (home), Days, Use cases, Cheatsheets, Projects (all `autogenerate`).
@@ -59,7 +82,7 @@ sidebar:
 ## Goal for today
 
 ## What I did
-<!-- commands I ran, in order, as code blocks, each followed by > AI tip: "..." -->
+<!-- commands I ran, in order, as code blocks, each followed by > 🟢 **VIEW** · AI prompt: "..." -->
 
 ## What broke and how I fixed it
 | Problem | Cause | Fix |
@@ -68,8 +91,8 @@ sidebar:
 ## What I learned (in my own words)
 
 ## Commands I learned
-| Command | What it does | AI tip (ask Claude) |
-| --- | --- | --- |
+| Command | Type | What it does | AI prompt |
+| --- | --- | --- | --- |
 
 ## Questions / still unclear
 
