@@ -1,7 +1,7 @@
-// Creates the next journal page: src/content/docs/journal/day-NN.md
+// Creates the next day page: src/content/docs/days/day-NN.md
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 
-const dir = 'src/content/docs/journal';
+const dir = 'src/content/docs/days';
 mkdirSync(dir, { recursive: true });
 const days = readdirSync(dir).map((f) => f.match(/^day-(\d+)\.md$/)?.[1]).filter(Boolean).map(Number);
 const n = Math.max(0, ...days) + 1;
@@ -10,10 +10,9 @@ const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD, local time
 const file = `${dir}/day-${nn}.md`;
 
 writeFileSync(file, `---
-title: Day ${nn} — <topic>
+title: Day ${nn} — <what I practiced>
 description: <one line>
 date: ${today}
-stage: 0
 tags: [railway]
 sidebar:
   order: ${-n}

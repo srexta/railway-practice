@@ -10,8 +10,8 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/srexta/railway-practice' }],
 			sidebar: [
 				{ label: 'Start here', link: '/' },
-				{ label: 'Journal', items: [{ autogenerate: { directory: 'journal' } }] },
-				{ label: 'Stages', items: [{ autogenerate: { directory: 'stages' } }] },
+				{ label: 'Days', items: [{ autogenerate: { directory: 'days' } }] },
+				{ label: 'Use cases', items: [{ autogenerate: { directory: 'use-cases' } }] },
 				{ label: 'Cheatsheets', items: [{ autogenerate: { directory: 'cheatsheet' } }] },
 				{ label: 'Projects', items: [{ autogenerate: { directory: 'projects' } }] },
 			],

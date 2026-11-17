@@ -16,66 +16,50 @@ Context for Claude Code in this repo. Read it at the start of every session.
 - Never commit secrets: no tokens, `.env` files, or Railway/Cloudflare credentials. Check `git diff --staged` for anything that looks like a key before every commit.
 - Keep the site's tone like a personal notebook: what I did, what broke, how I fixed it, what I learned.
 - **Track everything, every session, without being asked.** As we work, write it into the md files:
-  - today's `journal/day-NN.md` (create it with `npm run new-day` if missing): commands run, what broke, fixes, what I learned;
+  - today's `days/day-NN.md` (create it with `npm run new-day` if missing): commands run, what broke, fixes, what I learned;
+  - each practical task I complete → a `use-cases/<task>.md` page (syntax + real example + AI tip), created or extended;
   - every new `railway` command → `cheatsheet/railway-cli.md`;
-  - every error → `cheatsheet/troubleshooting.md` (error → cause → fix);
-  - stage progress → the table in `index.mdx` and the matching `stages/NN-*.md`.
+  - every error → `cheatsheet/troubleshooting.md` (error → cause → fix).
   **Only log what I learned about servers and Railway.** Never write about building this site, the repo, Claude setup, npm/Astro/Cloudflare tooling, or commits. That work happens but stays off the site.
   **I run my commands through Claude.** Every command logged on the site gets an **AI tip**: a short plain-English request I could give Claude to run it (e.g. `railway logs -n 100` → *"Show me the last 100 lines of my app's logs"*). Command tables use the columns `Command | What it does | AI tip (ask Claude)`; for code blocks, put a `> AI tip:` line under the block.
-  **Only publish what I've actually practiced.** No pre-filled guides, placeholder stages, empty command groups or future checklists on the site. A stage page, cheatsheet row or project section appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/` (e.g. keep it in the repo root). (Day 1 content is an accepted exception.)
-  Before the site exists, log to `notes.md` at the repo root and move it into the journal once it does. Update the logs at the end of each task, not only at the end of the session.
-
-## Goal for the first session
-
-Set up the site, publish it, and add my first day's notes.
-
-1. Scaffold an Astro Starlight project at the repo root (`npm create astro@latest -- --template starlight`, or install `astro` + `@astrojs/starlight` by hand if the template download fails).
-2. Set up the content structure below, a home page, and a working sidebar.
-3. Add `wrangler.jsonc` for Cloudflare Workers static assets and the deploy scripts.
-4. Add `scripts/new-day.mjs` so that `npm run new-day` creates the next day's log from the template.
-5. Run `npm run build` and `npm run preview` and confirm every page renders.
-6. Deploy (with my OK) and connect the repo to Cloudflare Workers Builds so each push auto-deploys.
-7. Commit and push to `main`.
+  **Only publish what I've actually practiced.** No pre-filled guides, placeholder pages, empty command groups or future checklists on the site. A day page, use-case page or cheatsheet row appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/` (e.g. `server-basics.md` stays in the repo root). Never organise the site by "Stage N"; use days and use cases.
+  Update the logs at the end of each task, not only at the end of the session.
 
 ## Site structure
 
 ```
 src/content/docs/
-├── index.mdx                 # Home: what this is, progress table, links
-├── journal/                  # One page per study day (sidebar: newest first)
-│   └── day-01.md
-├── stages/                   # Clean topic notes, one per learning stage
-│   ├── 00-server-basics.md
-│   ├── 01-cli-setup.md
-│   └── ...                   # up to 12-monitoring-cost-security.md
+├── index.mdx                 # Home: short intro and links
+├── days/                     # One page per practice day (sidebar: newest first)
+├── use-cases/                # One page per practical Railway task, e.g. deploy-node-app.md, add-postgres.md
 ├── cheatsheet/
-│   ├── railway-cli.md        # Every railway command I've used, grouped
+│   ├── railway-cli.md        # Every railway command I've used, grouped, with AI tips
 │   └── troubleshooting.md    # Error → cause → fix, filled in as I hit them
-└── projects/
-    └── bookings-app.md       # The practice app I'm deploying
+└── projects/                 # Real apps I study (only what I've looked at)
 ```
 
-- **journal/** is raw and chronological: what I did today.
-- **stages/** is refined reference notes, rewritten as my understanding improves.
+- **days/** is raw and chronological: what I practiced today.
+- **use-cases/** is refined how-to notes by task, built from the days: what it's for, the command syntax, a real example from my practice, AI tips, gotchas.
 - **cheatsheet/** is quick lookup.
 
-Sidebar groups, in order: Start here (home), Journal, Stages, Cheatsheets, Projects. Use Starlight `autogenerate` for the journal and stages folders.
+Sidebar groups, in order: Start here (home), Days, Use cases, Cheatsheets, Projects (all `autogenerate`).
 
-## Daily log template (`npm run new-day` generates this)
+## Day page template (`npm run new-day` generates this)
 
 ```md
 ---
-title: Day NN — <topic>
+title: Day NN — <what I practiced>
 description: <one line>
 date: YYYY-MM-DD
-stage: <0–12>
 tags: [railway, <topic>]
+sidebar:
+  order: -NN
 ---
 
 ## Goal for today
 
 ## What I did
-<!-- commands I ran, in order, as code blocks -->
+<!-- commands I ran, in order, as code blocks, each followed by > AI tip: "..." -->
 
 ## What broke and how I fixed it
 | Problem | Cause | Fix |
@@ -84,15 +68,13 @@ tags: [railway, <topic>]
 ## What I learned (in my own words)
 
 ## Commands I learned
-| Command | What it does |
-| --- | --- |
+| Command | What it does | AI tip (ask Claude) |
+| --- | --- | --- |
 
 ## Questions / still unclear
 
 ## Next
 ```
-
-The script should find the highest `day-NN.md`, create the next number with today's date, and print the file path.
 
 ## Cloudflare Workers config
 
@@ -127,16 +109,9 @@ To publish:
 - **Auto-deploy on every push:** Cloudflare dashboard → Workers & Pages → `railway-practice` → Settings → Builds → connect GitHub repo `srexta/railway-practice`, branch `main`. Build command `npm run build`, deploy command `npx wrangler deploy`.
 - **Later (optional):** a custom domain such as `railway.<mydomain>` via Workers → Settings → Domains & Routes.
 
-## Content to seed on day one
+## My learning order (private plan: never shown on the site as stages)
 
-- `stages/00-server-basics.md`: adapt it from `server-basics.md` (my Stage 0 study guide; I'll place it in the repo root). Keep the explanations and exercises, and turn the self-test into a "check yourself" section.
-- `journal/day-01.md`: "Set up my learning site + started server basics", filled in from what we actually do this session.
-- `cheatsheet/railway-cli.md`: start with the groups below; I'll add commands as I use them.
-- `index.mdx`: a short intro and a progress table with Stages 0–12, each marked Not started, In progress, or Done.
-
-## My learning path (for context and for the progress table)
-
-| Stage | Topic |
+| Step | Topic |
 | --- | --- |
 | 0 | Server basics: terminal, processes, ports, HTTP, DNS, HTTPS, env vars, logs, Docker, databases |
 | 1 | Install and log in to the Railway CLI |
@@ -152,7 +127,7 @@ To publish:
 | 11 | Automation: `RAILWAY_TOKEN`, CI/CD, `railway api`, MCP/agent |
 | 12 | Monitoring, `usage`, cost limits, team access, security |
 
-Current status: **Stage 0, Day 1.**
+Current status: **nothing practiced on Railway yet. Next: install the Railway CLI and log in.**
 
 ## Railway CLI quick reference (current syntax, Nov 2026)
 
@@ -182,12 +157,12 @@ Full reference: https://docs.railway.com/cli
 ## Conventions
 
 - Markdown pages: sentence-case headings, code blocks tagged with a language (`bash`, `json`, `sql`), and tables for command lists.
-- Commit messages: `day NN: <what I learned>` for journal entries, and `site: <change>` for site changes.
+- Commit messages: `day NN: <what I learned>` for day pages, and `site: <change>` for site changes.
 - Keep dependencies minimal: Astro, Starlight, `sharp`, and `wrangler` (dev).
 - Add `.gitignore` entries for `node_modules/`, `dist/`, `.astro/`, `.wrangler/`, `.env*`, and `.dev.vars`.
 
 ## Safety rules for my Railway practice
 
-- Practice only in a Railway project called `playground` until Stage 10.
+- Practice only in a Railway project called `playground` until I learn config as code (step 10).
 - Run `railway status` before any destructive command (`down`, `delete`, `volume delete`, `environment delete`).
 - Never paste real tokens or connection strings into the site. Redact them as `postgresql://user:****@host:5432/db`.

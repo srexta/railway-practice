@@ -6,11 +6,10 @@ import { docsSchema } from '@astrojs/starlight/schema';
 export const collections = {
 	docs: defineCollection({
 		loader: docsLoader(),
-		// Extra frontmatter used by journal pages.
+		// Extra frontmatter used by day pages.
 		schema: docsSchema({
 			extend: z.object({
 				date: z.coerce.date().optional(),
-				stage: z.number().optional(),
 				tags: z.array(z.string()).optional(),
 			}),
 		}),
