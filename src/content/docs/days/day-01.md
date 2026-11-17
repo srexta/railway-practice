@@ -154,6 +154,61 @@ echo $?                  # exit code of the last command
    ```
    This is exactly the pattern your apps need on Railway so deploys don't cut off requests.
 
+### Example 1: a real mini web server
+
+The dummy process above just sits there. This one is a real server: it opens port 3000 (a numbered "door" on my computer), waits for visitors, and answers "hi". It's the same thing my apps will do on Railway, just tiny.
+
+Think of it as opening a tiny shop: the port is the door, a request is a customer knocking, the reply is me answering.
+
+**Step 1: start the server (terminal 1).** Paste as one line:
+
+```bash
+node -e "require('http').createServer((q,s)=>{console.log(q.url);s.end('hi\n')}).listen(3000)"
+```
+
+> AI tip: "Start a tiny Node web server on port 3000 that replies 'hi'"
+
+Nothing prints and the prompt doesn't come back. That's normal: the server is running and waiting.
+
+**Step 2: visit it (terminal 2).**
+
+```bash
+curl localhost:3000
+```
+
+> AI tip: "Send a request to my local server on port 3000"
+
+It printed `hi`. Terminal 1 printed `/`, the server logging my visit. `localhost` means "this same computer".
+
+**Step 3: find who owns port 3000.**
+
+```bash
+lsof -i :3000
+```
+
+> AI tip: "Which process is using port 3000?"
+
+The `PID` column is the server's process ID, the number the computer gives every running program.
+
+**Step 4: stop it, then try again.**
+
+```bash
+kill <PID>
+curl localhost:3000
+```
+
+> AI tip: "Stop the process on port 3000 and check it's gone"
+
+The second curl fails with `Connection refused`, which means nobody is behind that door anymore. On a real server, this error usually means the app crashed or isn't running.
+
+**What broke:**
+
+| Problem | Cause | Fix |
+| --- | --- | --- |
+| `SyntaxError: Invalid or unexpected token` | My first, longer command wrapped when I copied it, so a line break landed inside the `'...'` text. JavaScript text in quotes must stay on one line. | Used the shorter one-line command above. |
+
+**What I learned:** a server is just a program that keeps running and listens on a port. `curl` knocks on the door, `lsof -i :PORT` tells me who's behind it, and `kill` closes it. `Connection refused` = nothing is listening.
+
 ---
 
 ## 4. Ports and localhost
