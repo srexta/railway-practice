@@ -22,7 +22,7 @@ Context for Claude Code in this repo. Read it at the start of every session.
   - every error → `cheatsheet/troubleshooting.md` (error → cause → fix).
   **Only log what I learned about servers and Railway.** Never write about building this site, the repo, Claude setup, npm/Astro/Cloudflare tooling, or commits. That work happens but stays off the site.
   **I run my commands through Claude.** Every command logged on the site gets an **AI tip**: a short plain-English request I could give Claude to run it (e.g. `railway logs -n 100` → *"Show me the last 100 lines of my app's logs"*). Command tables use the columns `Command | What it does | AI tip (ask Claude)`; for code blocks, put a `> AI tip:` line under the block.
-  **Only publish what I've actually practiced.** No pre-filled guides, placeholder pages, empty command groups or future checklists on the site. A day page, use-case page or cheatsheet row appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/` (e.g. `server-basics.md` stays in the repo root). Never organise the site by "Stage N"; use days and use cases.
+  **Only publish what I've actually practiced.** No pre-filled guides, placeholder pages, empty command groups or future checklists on the site. A day page, use-case page or cheatsheet row appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/` (Day 01 — Server basics is the accepted exception). Never organise the site by "Stage N"; use days and use cases.
   Update the logs at the end of each task, not only at the end of the session.
 
 ## Site structure
