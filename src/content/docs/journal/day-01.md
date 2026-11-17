@@ -48,6 +48,13 @@ git commit -m "day 01: set up learning site and started server basics"
 git push -u origin main   # -u: remember origin/main so later I can just type `git push`
 ```
 
+9. Deployed the site to Cloudflare. It's live at **https://railway-practice.shrestha.workers.dev**:
+
+```bash
+npx wrangler login   # opens the browser to log in to Cloudflare
+npm run deploy       # build, then upload dist/ to Cloudflare Workers
+```
+
 ## What broke and how I fixed it
 
 | Problem | Cause | Fix |
@@ -78,5 +85,5 @@ git push -u origin main   # -u: remember origin/main so later I can just type `g
 
 ## Next
 
-- Deploy the site to Cloudflare and turn on auto-deploy from GitHub.
+- Turn on auto-deploy from GitHub (Cloudflare → Workers & Pages → `railway-practice` → Settings → Builds).
 - Start Stage 0 exercises: terminal and processes (Sections 2–3).
