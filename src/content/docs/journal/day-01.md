@@ -40,6 +40,14 @@ npm run build
 npm run preview
 ```
 
+8. Committed and pushed everything to GitHub:
+
+```bash
+git add -A
+git commit -m "day 01: set up learning site and started server basics"
+git push -u origin main   # -u: remember origin/main so later I can just type `git push`
+```
+
 ## What broke and how I fixed it
 
 | Problem | Cause | Fix |
@@ -62,6 +70,7 @@ npm run preview
 | `npm run new-day` | Create the next journal page |
 | `npm run build` | Turn the Markdown into a static site in `dist/` |
 | `npm run preview` | Build, then serve the site locally the same way Cloudflare will |
+| `git push -u origin main` | Upload my commits to GitHub and set `main` to track it |
 
 ## Questions / still unclear
 
