@@ -31,8 +31,8 @@ sidebar:
 ## What I learned (in my own words)
 
 ## Commands I learned
-| Command | What it does |
-| --- | --- |
+| Command | What it does | AI tip (ask Claude) |
+| --- | --- | --- |
 
 ## Questions / still unclear
 

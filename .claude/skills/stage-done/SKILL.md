@@ -9,7 +9,7 @@ The user finished a stage (number from the argument, or ask which one).
 2. **Write `src/content/docs/stages/NN-<topic>.md`** (zero-padded, e.g. `02-projects.md`; topic names are in `CLAUDE.md` → "My learning path"). Frontmatter: `title: "Stage N — <topic>"`, `description`, `sidebar: { order: N }`. Sections:
    - *What this stage is about*: one-paragraph plain-English summary with one analogy.
    - *Key ideas*: only concepts the user actually worked with.
-   - *Commands*: table of commands actually used.
+   - *Commands*: table of commands actually used — `Command | What it does | AI tip (ask Claude)`.
    - *Gotchas I hit*: from the journal's "what broke" rows.
    - *Check yourself*: 3–6 questions drawn from what was practiced.
    - *Journal days*: links to the day pages.
