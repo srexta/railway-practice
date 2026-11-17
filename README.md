@@ -38,6 +38,14 @@ Pages are added only after I've actually practiced something. Every command come
 | `npm run preview` | Build, then serve it locally the same way Cloudflare does |
 | `npm run deploy` | Build and publish to Cloudflare Workers (needs `npx wrangler login` once) |
 
+## ▶ Run buttons (local only)
+
+With `npm run dev`, every `bash` code block gets a **▶ Run** button. Output appears under the block, and **■ Stop** ends it (anything still running stops after 2 minutes).
+
+- Commands run in `~/playground/dayNN`, never in this repo.
+- 🔴 commands need a second click, and secret-leaking commits are refused. Both use the same rules as `.claude/hooks/guard.sh`.
+- Only exists inside `astro dev` (`src/runner.mjs`). It only accepts requests from this dev server on localhost, never from other websites. The deployed site has no Run buttons.
+
 ## Working with Claude Code
 
 - `CLAUDE.md` holds the rules for this repo: what to log, the AI-tip format, and Railway safety rules.

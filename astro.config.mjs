@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import runner from './src/runner.mjs';
 
 export default defineConfig({
 	integrations: [
@@ -8,6 +9,8 @@ export default defineConfig({
 			title: 'Railway Practice',
 			description: 'My learning journal: from zero server experience to running apps on Railway.',
 			customCss: ['./src/styles/custom.css'],
+			// ▶ Run buttons: the script no-ops unless the local dev runner answers.
+			head: [{ tag: 'script', attrs: { src: '/runner-client.js', defer: true } }],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/srexta/railway-practice' }],
 			sidebar: [
 				{ label: 'Start here', link: '/' },
@@ -17,5 +20,6 @@ export default defineConfig({
 				{ label: 'Projects', items: [{ autogenerate: { directory: 'projects' } }] },
 			],
 		}),
+		runner(),
 	],
 });
