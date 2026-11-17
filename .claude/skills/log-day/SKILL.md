@@ -11,7 +11,9 @@ Log this session into the site. Only record what the user **actually learned and
 
 **Color type + AI prompt on every command** (see "Command colors" in `CLAUDE.md`): 🟢 VIEW (GET, only looks) · 🔵 CREATE (POST, makes something new) · 🟡 EDIT (PATCH, changes part) · 🟠 UPDATE (PUT, replaces/redeploys/syncs as a whole) · 🔴 DELETE (removes/stops, can't be undone).
 - Tables: `| Command | Type | What it does | AI prompt |`, Type like `🔴 DELETE`.
-- Under code blocks: `> 🔴 **DELETE** · AI prompt: "Stop the process on port 3000"`.
+- Under code blocks, a colored notice (one line, raw HTML):
+  `<aside class="ai-prompt ai-delete"><strong class="ai-delete">🔴 DELETE</strong> AI prompt: "Stop the process on port 3000"</aside>`
+  Class per type: `ai-view`, `ai-create`, `ai-edit`, `ai-update`, `ai-delete`. Don't add a color legend table to day pages.
 - The AI prompt is a short plain-English request that would make Claude run the command. Base it on how the user actually phrased the request when possible.
 
 1. **Day page.** Look in `src/content/docs/days/` for a `day-NN.md` whose `date:` is today. If none exists, run `npm run new-day` and fill in its title (`Day NN — <what I practiced>`), description and `tags`. Then add to it (keep existing content):

@@ -39,7 +39,9 @@ Every command I run or learn is one of five types, named after HTTP methods:
 
 **On the site**, every command gets its type and an AI prompt (a plain-English request I can give Claude to run it):
 - Tables: `| Command | Type | What it does | AI prompt |`, with Type written as `🔴 DELETE`.
-- Code blocks: a line under the block: `> 🔴 **DELETE** · AI prompt: "Stop the process on port 3000"`.
+- Code blocks: a colored notice line under the block (styled by `src/styles/custom.css`; class = `ai-view|ai-create|ai-edit|ai-update|ai-delete`):
+  `<aside class="ai-prompt ai-delete"><strong class="ai-delete">🔴 DELETE</strong> AI prompt: "Stop the process on port 3000"</aside>`
+- No color legend table on day pages.
 
 **When Claude runs a command for me**, it says the type first, e.g. `🟢 VIEW: checking what's on port 3000`.
 For any 🔴 DELETE command, Claude **stops first** and shows:
@@ -82,7 +84,7 @@ sidebar:
 ## Goal for today
 
 ## What I did
-<!-- commands I ran, in order, as code blocks, each followed by > 🟢 **VIEW** · AI prompt: "..." -->
+<!-- commands I ran, in order, as code blocks, each followed by an <aside class="ai-prompt ai-..."> AI prompt notice -->
 
 ## What broke and how I fixed it
 | Problem | Cause | Fix |

@@ -7,6 +7,7 @@ export default defineConfig({
 		starlight({
 			title: 'Railway Practice',
 			description: 'My learning journal: from zero server experience to running apps on Railway.',
+			customCss: ['./src/styles/custom.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/srexta/railway-practice' }],
 			sidebar: [
 				{ label: 'Start here', link: '/' },

@@ -1,0 +1,26 @@
+/* AI prompt notices, colored by command type (see src/ai-prompt.mjs). */
+.sl-markdown-content .ai-prompt {
+	--c: #16a34a;
+	margin-block: 1rem;
+	padding: 0.75rem 1rem;
+	border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+	border-inline-start: 5px solid var(--c);
+	border-radius: 0.5rem;
+	background: color-mix(in srgb, var(--c) 10%, transparent);
+	color: var(--sl-color-white);
+}
+.sl-markdown-content .ai-prompt p { margin: 0; }
+.sl-markdown-content .ai-prompt strong {
+	display: inline-block;
+	padding: 0.05rem 0.5rem;
+	border-radius: 999px;
+	background: var(--c);
+	color: #fff;
+	font-size: var(--sl-text-xs);
+	letter-spacing: 0.04em;
+}
+.ai-view   { --c: #16a34a !important; }
+.ai-create { --c: #2563eb !important; }
+.ai-edit   { --c: #ca8a04 !important; }
+.ai-update { --c: #ea580c !important; }
+.ai-delete { --c: #dc2626 !important; }

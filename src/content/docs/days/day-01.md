@@ -8,25 +8,13 @@ sidebar:
 A beginner's study guide to the ten concepts every server error message assumes you know.
 Study time: **2–3 days at ~2 hours/day**. Everything below runs on your own laptop; no Railway account needed yet.
 
-### Command colors
-
-Every command here has a color type and an **AI prompt**, the plain-English request I give Claude to run it.
-
-| Color | Type | Like HTTP | Meaning |
-| --- | --- | --- | --- |
-| 🟢 | **VIEW** | GET | Only looks. Changes nothing. Safe anytime. |
-| 🔵 | **CREATE** | POST | Makes something new: a file, process, container or row. |
-| 🟡 | **EDIT** | PATCH | Changes one part of something that exists. |
-| 🟠 | **UPDATE** | PUT | Replaces, redeploys or syncs something as a whole. |
-| 🔴 | **DELETE** | DELETE | Removes, stops or discards. **Can't be undone.** Claude warns me first. |
-
 Do the exercises in a practice folder **outside** this site's repo:
 
 ```bash
 mkdir -p ~/playground/day01 && cd ~/playground/day01
 ```
 
-> 🔵 **CREATE** · AI prompt: "Make a practice folder ~/playground/day01 and move into it"
+<aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Make a practice folder ~/playground/day01 and move into it"</aside>
 
 > **Commands in this file** work on macOS and Linux. On Windows, install **WSL** (Windows Subsystem for Linux) first (`wsl --install` in PowerShell as admin) and run everything inside the Ubuntu terminal it gives you.
 
@@ -43,13 +31,13 @@ mkdir -p ~/playground/day01 && cd ~/playground/day01
 | `dig` / `nslookup` | Look up DNS (preinstalled on macOS/Linux) | `dig -v` |
 | `psql` | Postgres client; Railway's `connect` needs it | `psql --version` |
 
-> 🟢 **VIEW** · AI prompt: "Check which of these tools are installed: git, node, docker, curl, dig, psql"
+<aside class="ai-prompt ai-view"><strong class="ai-view">🟢 VIEW</strong> AI prompt: "Check which of these tools are installed: git, node, docker, curl, dig, psql"</aside>
 
 Install `psql`:
 - macOS: `brew install libpq && brew link --force libpq`
 - Ubuntu/WSL: `sudo apt install postgresql-client`
 
-> 🔵 **CREATE** · AI prompt: "Install the psql client on my Mac"
+<aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Install the psql client on my Mac"</aside>
 
 ---
 
@@ -157,7 +145,7 @@ When a process ends, it returns an **exit code**: `0` means success, anything el
    ```bash
    node -e "console.log('pid', process.pid); setInterval(()=>{}, 1000)"
    ```
-   > 🔵 **CREATE** · AI prompt: "Start a node process that runs forever and prints its PID"
+   <aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Start a node process that runs forever and prints its PID"</aside>
    In a **second terminal**, find it with `ps aux | grep node`, then `kill <pid>`. Watch the first terminal stop.
 2. Exit codes:
    ```bash
@@ -165,7 +153,7 @@ When a process ends, it returns an **exit code**: `0` means success, anything el
    node -e "process.exit(1)"; echo $?   # 1
    ls /does-not-exist; echo $?          # non-zero
    ```
-   > 🟢 **VIEW** · AI prompt: "Run a command that succeeds and one that fails, and show me their exit codes"
+   <aside class="ai-prompt ai-view"><strong class="ai-view">🟢 VIEW</strong> AI prompt: "Run a command that succeeds and one that fails, and show me their exit codes"</aside>
 3. Graceful shutdown — save as `graceful.js` and run it, then press Ctrl+C or `kill <pid>` from another terminal:
    ```js
    console.log('started, pid', process.pid);
@@ -178,7 +166,7 @@ When a process ends, it returns an **exit code**: `0` means success, anything el
    process.on('SIGTERM', () => stop('SIGTERM'));
    process.on('SIGINT', () => stop('SIGINT'));
    ```
-   > 🔵 **CREATE** · AI prompt: "Create graceful.js that shuts down cleanly on Ctrl+C or SIGTERM, and run it"
+   <aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Create graceful.js that shuts down cleanly on Ctrl+C or SIGTERM, and run it"</aside>
 
    This is exactly the pattern your apps need on Railway so deploys don't cut off requests.
 
@@ -194,7 +182,7 @@ Think of it as opening a tiny shop: the port is the door, a request is a custome
 node -e "require('http').createServer((q,s)=>{console.log(q.url);s.end('hi\n')}).listen(3000)"
 ```
 
-> 🔵 **CREATE** · AI prompt: "Start a tiny Node web server on port 3000 that replies 'hi'"
+<aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Start a tiny Node web server on port 3000 that replies 'hi'"</aside>
 
 Nothing prints and the prompt doesn't come back. That's normal: the server is running and waiting.
 
@@ -204,7 +192,7 @@ Nothing prints and the prompt doesn't come back. That's normal: the server is ru
 curl localhost:3000
 ```
 
-> 🟢 **VIEW** · AI prompt: "Send a request to my local server on port 3000"
+<aside class="ai-prompt ai-view"><strong class="ai-view">🟢 VIEW</strong> AI prompt: "Send a request to my local server on port 3000"</aside>
 
 It printed `hi`. Terminal 1 printed `/`, the server logging my visit. `localhost` means "this same computer".
 
@@ -214,7 +202,7 @@ It printed `hi`. Terminal 1 printed `/`, the server logging my visit. `localhost
 lsof -i :3000
 ```
 
-> 🟢 **VIEW** · AI prompt: "Which process is using port 3000?"
+<aside class="ai-prompt ai-view"><strong class="ai-view">🟢 VIEW</strong> AI prompt: "Which process is using port 3000?"</aside>
 
 The `PID` column is the server's process ID, the number the computer gives every running program.
 
@@ -225,7 +213,7 @@ kill <PID>
 curl localhost:3000
 ```
 
-> 🔴 **DELETE** · AI prompt: "Stop the process on port 3000 and check it's gone"
+<aside class="ai-prompt ai-delete"><strong class="ai-delete">🔴 DELETE</strong> AI prompt: "Stop the process on port 3000 and check it's gone"</aside>
 
 The second curl fails with `Connection refused`, which means nobody is behind that door anymore. On a real server, this error usually means the app crashed or isn't running.
 
@@ -278,7 +266,7 @@ One computer has one IP address but runs many programs. **Ports** (numbers 0–6
    ```
    Run `node server.js`, open `http://localhost:3000`.
 
-   > 🔵 **CREATE** · AI prompt: "Create server.js that reads PORT from the environment, and start it"
+   <aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Create server.js that reads PORT from the environment, and start it"</aside>
 2. Run it again in a second terminal **at the same time**. Read the error (`EADDRINUSE`) — two processes can't use one port.
 3. Run `PORT=4000 node server.js` and open port 4000. You just configured a port from outside the code.
 4. Use `lsof -i :3000` to find the process holding the port, then stop it with `kill`.
@@ -342,7 +330,7 @@ A **response** has a **status code**, headers and a body.
    ```
    Test each with `curl -i`.
 
-   > 🟡 **EDIT** · AI prompt: "Make server.js return 404 for unknown paths and 500 on /boom, then test both with curl"
+   <aside class="ai-prompt ai-edit"><strong class="ai-edit">🟡 EDIT</strong> AI prompt: "Make server.js return 404 for unknown paths and 500 on /boom, then test both with curl"</aside>
 
 ---
 
@@ -505,7 +493,7 @@ On a server you can't watch the screen, so these streams are collected as **logs
    ```bash
    for i in $(seq 1 20); do curl -s localhost:3000/ > /dev/null; done
    ```
-   > 🟢 **VIEW** · AI prompt: "Send 20 requests to my local server"
+   <aside class="ai-prompt ai-view"><strong class="ai-view">🟢 VIEW</strong> AI prompt: "Send 20 requests to my local server"</aside>
 
 ---
 
@@ -555,7 +543,7 @@ Key properties:
    docker run -p 3000:3000 hello-server
    docker run -p 4000:5000 -e PORT=5000 hello-server   # map host 4000 → container 5000
    ```
-   > 🔵 **CREATE** · AI prompt: "Build my server into a Docker image called hello-server and run it on port 3000"
+   <aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> AI prompt: "Build my server into a Docker image called hello-server and run it on port 3000"</aside>
    Explain to yourself why the second command works on `localhost:4000`.
 4. Stop the container with `docker stop` and watch whether your SIGTERM handler (Section 3) runs.
 

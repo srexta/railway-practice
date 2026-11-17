@@ -28,7 +28,7 @@ git commit -m "add health check" # 🔵 save it with a message
 git push                         # 🟠 send to GitHub → Railway redeploys
 ```
 
-> 🔵 **CREATE** + 🟠 **UPDATE** · AI prompt: "Commit my changes with a short message and push them."
+<aside class="ai-prompt ai-create"><strong class="ai-create">🔵 CREATE</strong> <strong class="ai-update">🟠 UPDATE</strong> AI prompt: "Commit my changes with a short message and push them."</aside>
 
 ## One-time setup
 
@@ -103,7 +103,7 @@ Common Railway setup: `main` deploys to **production**, a `staging` branch deplo
 echo ".env" >> .gitignore
 ```
 
-> 🟡 **EDIT** · AI prompt: "Make sure .env is git-ignored."
+<aside class="ai-prompt ai-edit"><strong class="ai-edit">🟡 EDIT</strong> AI prompt: "Make sure .env is git-ignored."</aside>
 
 - `git check-ignore -v .env` shows whether, and why, a file is ignored. 🟢 VIEW · AI prompt: "Is .env being ignored by git?"
 - If a secret was pushed, **rotate it** (make a new key) right away. Removing it from Git isn't enough, because it stays in history.

@@ -21,7 +21,7 @@ sidebar:
 ## Goal for today
 
 ## What I did
-<!-- commands I ran, in order, as code blocks, each followed by > 🟢 **VIEW** · AI prompt: "..." -->
+<!-- commands I ran, in order, as code blocks, each followed by <aside class="ai-prompt ai-view"><strong class="ai-view">🟢 VIEW</strong> AI prompt: "..."</aside> -->
 
 ## What broke and how I fixed it
 | Problem | Cause | Fix |
