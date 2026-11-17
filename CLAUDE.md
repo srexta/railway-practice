@@ -20,6 +20,7 @@ Context for Claude Code in this repo. Read it at the start of every session.
   - every new `railway` command → `cheatsheet/railway-cli.md`;
   - every error → `cheatsheet/troubleshooting.md` (error → cause → fix);
   - stage progress → the table in `index.mdx` and the matching `stages/NN-*.md`.
+  **Only log what I learned about servers and Railway.** Never write about building this site, the repo, Claude setup, npm/Astro/Cloudflare tooling, or commits. That work happens but stays off the site.
   **Only publish what I've actually practiced.** No pre-filled guides, placeholder stages, empty command groups or future checklists on the site. A stage page, cheatsheet row or project section appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/` (e.g. keep it in the repo root). (Day 1 content is an accepted exception.)
   Before the site exists, log to `notes.md` at the repo root and move it into the journal once it does. Update the logs at the end of each task, not only at the end of the session.
 

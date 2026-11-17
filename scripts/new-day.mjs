@@ -1,7 +1,8 @@
 // Creates the next journal page: src/content/docs/journal/day-NN.md
-import { readdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 
 const dir = 'src/content/docs/journal';
+mkdirSync(dir, { recursive: true });
 const days = readdirSync(dir).map((f) => f.match(/^day-(\d+)\.md$/)?.[1]).filter(Boolean).map(Number);
 const n = Math.max(0, ...days) + 1;
 const nn = String(n).padStart(2, '0');
