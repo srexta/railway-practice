@@ -11,6 +11,7 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/srexta/railway-practice' }],
 			sidebar: [
 				{ label: 'Start here', link: '/' },
+				{ label: 'Railway week (plan)', items: [{ autogenerate: { directory: 'plan' } }] },
 				{ label: 'Days', items: [{ autogenerate: { directory: 'days' } }] },
 				{ label: 'Use cases', items: [{ autogenerate: { directory: 'use-cases' } }] },
 				{ label: 'Cheatsheets', items: [{ autogenerate: { directory: 'cheatsheet' } }] },
