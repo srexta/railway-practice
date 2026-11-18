@@ -71,6 +71,13 @@ Every concept in this guide is one step of that diagram. Learn them one at a tim
 ### What it is
 The **terminal** is a text window. The **shell** (bash, zsh) is the program inside it that reads your commands and runs them. Servers usually have no screen or mouse, so this is how you'll work with them, and the Railway CLI lives here too.
 
+### Real-world use
+
+- Logging in to a server or Railway and running commands, since servers have no screen or mouse.
+- Running the `railway` CLI: deploys, logs and variables all happen from the terminal.
+- Searching a huge log for one error with `grep`, instead of scrolling through it by eye.
+- Scripting boring jobs, like backing up a database every night.
+
 ### Key ideas
 - **Current directory**: where you "are". Commands act relative to it.
 - **Paths**: `/` is the root, `~` is your home folder, `.` is "here", `..` is "one level up".
@@ -129,6 +136,13 @@ When a process ends, it returns an **exit code**: `0` means success, anything el
 - `SIGINT` — what Ctrl+C sends ("please stop")
 - `SIGTERM` — "please shut down cleanly" (Railway sends this before replacing your app during a deploy)
 - `SIGKILL` — "stop now", can't be ignored
+
+### Real-world use
+
+- Checking whether a client's site is actually running when it stops responding.
+- Killing a stuck or frozen app that keeps using CPU or memory.
+- Reading exit codes: Railway marks a deploy as crashed when the app exits with a non-zero code.
+- Graceful shutdown: letting an app finish its current requests before a redeploy stops it, so users don't see errors.
 
 ### Commands to learn
 | Command | Type | What it does | AI prompt |
@@ -247,6 +261,13 @@ One computer has one IP address but runs many programs. **Ports** (numbers 0–6
 
 > ⚠️ The #1 Railway beginner bug: an app listening on `127.0.0.1` or a hard-coded port. On Railway your app must listen on the port in the `PORT` environment variable, on `0.0.0.0`/`::`.
 
+### Real-world use
+
+- Fixing "port 3000 already in use" when an old copy of the app is still running.
+- Running several apps on one machine: website on 3000, API on 4000, database on 5432.
+- Railway gives every app a `PORT` variable. If the app listens on a different port, the site shows a 502.
+- Keeping a database private: only expose its port inside the private network, never to the whole internet.
+
 ### Commands to learn
 | Command | Type | What it does | AI prompt |
 | --- | --- | --- | --- |
@@ -283,6 +304,13 @@ One computer has one IP address but runs many programs. **Ports** (numbers 0–6
 - an optional **body**: form data or JSON
 
 A **response** has a **status code**, headers and a body.
+
+### Real-world use
+
+- Checking whether a site or API is up with `curl -I` before a client calls to complain.
+- Reading the status code to know whose fault it is: 4xx means the request was wrong, 5xx means the server broke.
+- Testing an API endpoint (login, checkout, contact form) without building a front-end first.
+- Debugging redirects, for example a site stuck in an http ↔ https loop.
 
 ### Status codes you must know
 | Code | Meaning | What it usually tells you |
@@ -339,6 +367,13 @@ A **response** has a **status code**, headers and a body.
 ### What it is
 **DNS** (Domain Name System) is the internet's phone book: it turns names like `railway.com` into IP addresses.
 
+### Real-world use
+
+- Pointing a client's domain (`shop.example.com`) at their app on Railway.
+- Moving a site to a new server: change the DNS record, then wait for it to spread.
+- Debugging "site not found": often the domain points to the old IP or the record is missing.
+- Setting up email records (MX, SPF) so the client's emails don't land in spam.
+
 ### Record types
 | Record | Purpose | Example |
 |---|---|---|
@@ -383,6 +418,13 @@ On Railway you'll mostly add a **CNAME** (pointing your domain at Railway) and s
 
 Railway issues and renews certificates for you once your DNS points correctly. Your jobs are: get DNS right, make your app redirect http → https, and set cookies as `Secure`.
 
+### Real-world use
+
+- Giving every client site the padlock in the browser, which browsers and Google now expect.
+- Fixing "Your connection is not private" when a certificate expired or doesn't match the domain.
+- Railway issues certificates automatically for custom domains, as long as DNS points to Railway.
+- Protecting logins, payments and form data from being read on public Wi-Fi.
+
 ### Common problems
 | Symptom | Likely cause |
 |---|---|
@@ -417,6 +459,13 @@ APP_ENV=production
 ```
 
 Why this matters: the **same code** runs on your laptop, staging and production — only the variables change. On Railway, you'll set them with `railway variable set`, and Railway also injects its own (`PORT`, `RAILWAY_PUBLIC_DOMAIN`, etc.).
+
+### Real-world use
+
+- Keeping API keys, database passwords and payment secrets out of the code, so they never land on GitHub.
+- Using different settings per environment: a test database on staging, the real one in production.
+- Changing a setting (an email address, a feature on/off) without changing code. Railway restarts the app with the new value.
+- Railway sets some for you, like `PORT` and the database's `DATABASE_URL`.
 
 ### Rules
 - **Never commit secrets** to Git. Put them in `.env` (git-ignored) locally, and in Railway variables in the cloud.
@@ -466,6 +515,13 @@ Every process has two output streams:
 
 On a server you can't watch the screen, so these streams are collected as **logs**. Railway captures both automatically; `railway logs` is how you'll read them. **Logs are your #1 debugging tool.**
 
+### Real-world use
+
+- Finding out why a site crashed at 2 a.m. by reading what the app printed before it died.
+- Watching a deploy live with `railway logs` to catch build or startup errors.
+- Tracking who did what: failed logins, payments, slow requests.
+- Railway collects anything the app prints to stdout and stderr, so `console.log` is enough to start.
+
 ### Good logging habits
 - One line per event, with a level: `info`, `warn`, `error`.
 - Include context: request path, user ID, request ID, how long it took.
@@ -510,6 +566,13 @@ Key properties:
 - Containers are **disposable**. When they're replaced, files written inside them are **lost**. That's why uploads need a volume or bucket.
 - A container only sees ports you **publish** (`-p host:container`).
 - Config goes in through **environment variables** (`-e`).
+
+### Real-world use
+
+- "Works on my machine" fixes: the same image runs the same way on my laptop and on Railway.
+- Running Postgres or Redis locally with one command, without installing them for real.
+- Deploying apps written in any language: Railway builds an image and runs it as a container.
+- Rolling back a bad deploy by running the previous image again.
 
 ### Commands to learn
 | Command | Type | What it does | AI prompt |
@@ -566,6 +629,13 @@ Core ideas:
 - **Connections are limited** (Postgres default: 100). Each app instance opens a **pool** of them.
 - **Backups**: a copy of the data. A backup you've never restored is not a real backup.
 - **Public vs private access**: databases should only be reachable by your app, not the whole internet.
+
+### Real-world use
+
+- Storing users, orders, bookings and form submissions for client sites.
+- Adding Postgres to a project on Railway with one command and connecting the app through `DATABASE_URL`.
+- Backups and restore: getting data back after a bad update or an accidental delete.
+- Looking up or fixing a single record directly with SQL when the admin panel can't.
 
 ### Commands to learn
 ```bash
