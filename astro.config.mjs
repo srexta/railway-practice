@@ -12,6 +12,7 @@ export default defineConfig({
 			sidebar: [
 				{ label: 'Start here', link: '/' },
 				{ label: 'Railway week (plan)', items: [{ autogenerate: { directory: 'plan' } }] },
+				{ label: 'Docker tutorial', items: [{ autogenerate: { directory: 'docker' } }] },
 				{ label: 'Days', items: [{ autogenerate: { directory: 'days' } }] },
 				{ label: 'Use cases', items: [{ autogenerate: { directory: 'use-cases' } }] },
 				{ label: 'Cheatsheets', items: [{ autogenerate: { directory: 'cheatsheet' } }] },

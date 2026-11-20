@@ -22,7 +22,7 @@ Context for Claude Code in this repo. Read it at the start of every session.
   - every error → `cheatsheet/troubleshooting.md` (error → cause → fix).
   **Only log what I learned about servers and Railway.** Never write about building this site, the repo, Claude setup, npm/Astro/Cloudflare tooling, or commits. That work happens but stays off the site.
   **I run my commands through Claude.** Every command on the site gets a **color type** and an **AI prompt**. See "Command colors" below.
-  **Only publish what I've actually practiced.** No pre-filled guides, placeholder pages, empty command groups or future checklists on the site. A day page, use-case page or cheatsheet row appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/`. Accepted exceptions: Day 01 — Server basics, and the **Railway week plan** in `src/content/docs/plan/` (sidebar group "Railway week (plan)", one page per planned day 02–09). Plan pages are the route; when I practice a day, what actually happened goes in `days/day-NN.md`, not into the plan page. Update a plan page only if the plan itself changes. Never organise the site by "Stage N"; use days and use cases.
+  **Only publish what I've actually practiced.** No pre-filled guides, placeholder pages, empty command groups or future checklists on the site. A day page, use-case page or cheatsheet row appears only after I've done it. Study material I haven't worked through stays out of `src/content/docs/`. Accepted exceptions: Day 01 — Server basics, and the **Railway week plan** in `src/content/docs/plan/` (sidebar group "Railway week (plan)", one page per planned day 02–09). Also the **Docker tutorial** in `src/content/docs/docker/` (sidebar group "Docker tutorial", an overview plus lessons 01–09), a study course I asked for to come back to; when I practice a lesson, what happened goes in `days/day-NN.md`. Plan pages are the route; when I practice a day, what actually happened goes in `days/day-NN.md`, not into the plan page. Update a plan page only if the plan itself changes. Never organise the site by "Stage N"; use days and use cases.
   Update the logs at the end of each task, not only at the end of the session.
 
 ## Command colors (always use these)
@@ -77,7 +77,7 @@ src/content/docs/
 - **use-cases/** is refined how-to notes by task, built from the days: what it's for, the command syntax, a real example from my practice, color types and AI prompts, gotchas.
 - **cheatsheet/** is quick lookup.
 
-Sidebar groups, in order: Start here (home), Railway week (plan), Days, Use cases, Cheatsheets, Projects (all `autogenerate`).
+Sidebar groups, in order: Start here (home), Railway week (plan), Docker tutorial, Days, Use cases, Cheatsheets, Projects (all `autogenerate`).
 
 ## Day page template (`npm run new-day` generates this)
 
