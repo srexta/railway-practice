@@ -10,20 +10,7 @@ sidebar:
 
 **Variables** are settings on a sticky note attached to the app: the same app reads a different note in each place. **Environments** are a copy of the whole office on another floor. "Staging" is the test floor; "production" is where real customers walk in.
 
-```text
- ┌──────── production ────────┐      ┌───────── staging ──────────┐
- │  hello                     │      │  hello                     │
- │   GREETING=customers       │      │   GREETING=testers         │
- │   DATABASE_URL ◀──┐        │      │   DATABASE_URL ◀──┐        │
- │                   │        │      │                   │        │
- │  Postgres ────────┘        │      │  Postgres ────────┘        │
- │  (real data)               │      │  (test data)               │
- └────────────────────────────┘      └────────────────────────────┘
-           ▲                                    ▲
-           └──── shared: ${{shared.APP_NAME}} ──┘
-
- DATABASE_URL = ${{Postgres.DATABASE_URL}}  (a reference variable)
-```
+<div class="dm not-content"><p class="dm-zi" style="margin-bottom:.6rem">Click any card or ⓘ to see what it means.</p><div class="dm-split"><div class="dm-zone dm-z-pr"><span class="dm-zt">🟢 production</span><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">📦</span><span class="dm-tt"><b>hello</b><small>my app</small></span></summary><div class="dm-body"><p><code>GREETING=customers</code>: a normal variable, typed in for this environment only.</p><p><code>DATABASE_URL = ${{Postgres.DATABASE_URL}}</code>: a <b>reference variable</b>. Instead of copying the address, it points at Postgres's own variable, so it stays right if Postgres changes.</p></div></details></div><div class="dm-row"><div class="dm-link" data-l="reads DATABASE_URL"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🐘</span><span class="dm-tt"><b>Postgres</b><small>real data</small></span></summary><div class="dm-body"><p class="dm-plain">This environment's own database. Staging and production never share data.</p></div></details></div></div><div class="dm-zone dm-z-st"><span class="dm-zt">🧪 staging</span><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">📦</span><span class="dm-tt"><b>hello</b><small>my app</small></span></summary><div class="dm-body"><p><code>GREETING=testers</code>: a normal variable, typed in for this environment only.</p><p><code>DATABASE_URL = ${{Postgres.DATABASE_URL}}</code>: a <b>reference variable</b>. Instead of copying the address, it points at Postgres's own variable, so it stays right if Postgres changes.</p></div></details></div><div class="dm-row"><div class="dm-link" data-l="reads DATABASE_URL"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🐘</span><span class="dm-tt"><b>Postgres</b><small>test data</small></span></summary><div class="dm-body"><p class="dm-plain">This environment's own database. Staging and production never share data.</p></div></details></div></div></div><div class="dm-merge"><div class="dm-link" style="height:1.4rem"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🔗</span><span class="dm-tt"><b>Shared variable</b><small>${{shared.APP_NAME}}</small></span></summary><div class="dm-body"><p class="dm-plain">Set once at project level, read by both environments. Good for things that are the same everywhere, like the app's name.</p></div></details></div><div class="dm-note">Same app, different sticky note: <code>GREETING</code> is <code>customers</code> on production and <code>testers</code> on staging.</div></div>
 
 Same services on two floors, each with its own settings and its own data.
 

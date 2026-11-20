@@ -10,18 +10,7 @@ sidebar:
 
 A database is the restaurant's storeroom. The kitchen (my app) can be rebuilt any time, but the storeroom keeps the stock. That's why it sits on a **volume**, a disk that survives redeploys.
 
-```text
- ┌──────────────── Railway: playground / production ────────────────┐
- │                                                                   │
- │   hello ──private network──▶ Postgres                              │
- │          postgres.railway.internal:5432     │                     │
- │          (DATABASE_URL)                     └── volume (the data) │
- │                                                     ▲             │
- └─────────────────────────────────────────────────────┼─────────────┘
-                                                       │
- my laptop ──railway connect──▶ public proxy ──────────┘
-                                (DATABASE_PUBLIC_URL)
-```
+<div class="dm not-content"><p class="dm-zi" style="margin-bottom:.6rem">Click any card or ⓘ to see what it means.</p><div class="dm-zone dm-z-rw"><span class="dm-zt">🚂 Railway · playground / production</span><div class="dm-h"><details class="dm-node"><summary><span class="dm-ico">📦</span><span class="dm-tt"><b>hello</b><small>my app</small></span></summary><div class="dm-body"><p class="dm-plain">My app reads <code>DATABASE_URL</code> and connects to Postgres with it.</p></div></details><div class="dm-ha"><span>private network</span></div><details class="dm-node"><summary><span class="dm-ico">🐘</span><span class="dm-tt"><b>Postgres</b><small>postgres.railway.internal:5432</small></span></summary><div class="dm-body"><p class="dm-plain">The <b>private network</b> is the staff corridor: only services in this project can use <code>*.railway.internal</code> addresses. Fast, free, and invisible to the internet.</p><p><code>5432</code> is Postgres's usual port.</p></div></details><div class="dm-ha"><span>stores on</span></div><details class="dm-node"><summary><span class="dm-ico">💾</span><span class="dm-tt"><b>Volume</b><small>the data</small></span></summary><div class="dm-body"><p class="dm-plain">A disk that survives redeploys. The database program can be replaced; the data on the volume stays.</p></div></details></div></div><div class="dm-lane" style="margin-top:1rem"><span class="dm-lt">From outside Railway</span><div class="dm-h"><details class="dm-node"><summary><span class="dm-ico">💻</span><span class="dm-tt"><b>My laptop <span class="dm-badge dm-you">you</span></b><small>railway connect</small></span></summary><div class="dm-body"><p class="dm-plain"><code>railway connect</code> opens a <code>psql</code> session to the database from my terminal.</p></div></details><div class="dm-ha"><span>internet</span></div><details class="dm-node"><summary><span class="dm-ico">🚪</span><span class="dm-tt"><b>Public proxy</b><small>DATABASE_PUBLIC_URL</small></span></summary><div class="dm-body"><p class="dm-plain">A public door into the database, for when I'm not inside Railway. Its address is in <code>DATABASE_PUBLIC_URL</code>. Anyone with the password can knock, so treat it like a key.</p></div></details><div class="dm-ha"><span>into</span></div><div class="dm-ok">🐘 the same Postgres</div></div></div></div>
 
 The app reaches the database privately (fast, not exposed). I reach it from my laptop through a public proxy.
 

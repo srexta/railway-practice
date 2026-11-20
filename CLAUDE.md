@@ -50,6 +50,16 @@ For any 🔴 DELETE command, Claude **stops first** and shows:
 
 Then it waits for my explicit yes. (`.claude/hooks/guard.sh` also enforces this with a permission prompt.)
 
+## Visual step guides (always)
+
+Whenever a page describes a process with steps (a flow, a deploy, a setup, a debug path, how pieces connect, a plan), it gets a **complete visual step-by-step guide** of how the process works, in the style of the TripCart delivery map. Never plain ASCII art or a text code block as the diagram.
+
+- Build it with the shared `.dm` classes in `src/styles/custom.css`, wrapped in `<div class="dm not-content">…</div>` (raw HTML in the `.md`, no blank lines inside the block).
+- Pieces: `dm-zone` (coloured group with a title), `dm-node` cards (`<details>` that open), `dm-q` decision diamonds with yes/no branches (`dm-no` + `dm-end`, red = stops, `dm-fix` blue = what to do), `dm-link` animated arrows, `dm-ok` result pill, `dm-h`/`dm-ha` labelled step flows, `dm-fan` side-by-side, `dm-tree` hierarchies, `dm-segs`/`dm-lines` for labelled anatomy.
+- **Every card and every decision opens** to a plain-English explanation: what happens, what each command or term means (defined in plain words), and why it matters. Show the real commands.
+- Cover every condition: what happens on success, on failure, and when a step is skipped.
+- Check it renders (build + screenshot) on desktop and phone width before saying it's done.
+
 ## Site structure
 
 ```

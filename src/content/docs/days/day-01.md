@@ -47,20 +47,7 @@ A **server** is just a computer that runs a program which waits for requests and
 
 What happens when someone opens `https://shop.example.com`:
 
-```
-Browser
-  │ 1. DNS: "what IP is shop.example.com?"  → 203.0.113.10
-  │ 2. Connect to 203.0.113.10 on port 443 (HTTPS)
-  │ 3. TLS handshake: check the certificate, set up encryption
-  │ 4. Send HTTP request: GET / 
-  ▼
-Server (a process listening on a port)
-  │ 5. Reads config from environment variables (DB URL, secrets)
-  │ 6. Queries the database
-  │ 7. Writes a log line
-  ▼
-Browser receives HTTP response: 200 OK + HTML
-```
+<div class="dm not-content"><p class="dm-zi" style="margin-bottom:.6rem">Click any card or ⓘ to see what it means.</p><div class="dm-zone "><span class="dm-zt">🌐 Browser</span><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🔎</span><span class="dm-tt"><b>1. DNS lookup</b><small>"what IP is shop.example.com?" → 203.0.113.10</small></span></summary><div class="dm-body"><p class="dm-plain">The browser asks the internet's phone book for the server's number (IP address). See section 6.</p></div></details></div><div class="dm-row"><div class="dm-link"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🚪</span><span class="dm-tt"><b>2. Connect on port 443</b><small>HTTPS door</small></span></summary><div class="dm-body"><p class="dm-plain">It knocks on door 443 at that address. A port is a numbered door on a computer. See section 4.</p></div></details></div><div class="dm-row"><div class="dm-link"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🔒</span><span class="dm-tt"><b>3. TLS handshake</b><small>check certificate, set up encryption</small></span></summary><div class="dm-body"><p class="dm-plain">The server shows its certificate to prove it really is shop.example.com, then both sides agree on a secret key. See section 7.</p></div></details></div><div class="dm-row"><div class="dm-link"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">📨</span><span class="dm-tt"><b>4. HTTP request</b><small>GET /</small></span></summary><div class="dm-body"><p class="dm-plain">The browser asks for the home page. See section 5.</p></div></details></div></div><div class="dm-merge"><div class="dm-link" style="height:1.6rem"></div></div><div class="dm-zone dm-z-rw"><span class="dm-zt">🖥️ Server · a process listening on a port</span><p class="dm-zi">A process is a running program. See section 3.</p><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">⚙️</span><span class="dm-tt"><b>5. Read config</b><small>environment variables: DB URL, secrets</small></span></summary><div class="dm-body"><p class="dm-plain">Settings come from outside the code. See section 8.</p></div></details></div><div class="dm-row"><div class="dm-link"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🐘</span><span class="dm-tt"><b>6. Query the database</b></span></summary><div class="dm-body"><p class="dm-plain">Fetch the products, users, orders it needs. See section 11.</p></div></details></div><div class="dm-row"><div class="dm-link"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">📝</span><span class="dm-tt"><b>7. Write a log line</b></span></summary><div class="dm-body"><p class="dm-plain">Note what happened, for debugging later. See section 9.</p></div></details></div></div><div class="dm-merge"><div class="dm-link" style="height:1.6rem"></div></div><div class="dm-row"><div class="dm-ok">✅ Browser receives <code>200 OK</code> + HTML</div></div></div>
 
 Every concept in this guide is one step of that diagram. Learn them one at a time, then the whole picture makes sense.
 
@@ -493,10 +480,7 @@ $dbUrl = getenv('DATABASE_URL');   // Laravel: env('DATABASE_URL')
 ```
 
 **Connection URL anatomy** (you'll see these constantly):
-```
-postgresql://postgres:******@postgres.railway.internal:5432/railway
-└─scheme──┘ └─user─┘ └pass┘ └──────────host──────────┘ └port┘ └db─┘
-```
+<div class="dm not-content"><div class="dm-segs"><span class="dm-seg dm-c1"><code>postgresql://</code><small>scheme</small><i>which kind of database</i></span><span class="dm-seg dm-c2"><code>postgres</code><small>user</small><i>who logs in</i></span><span class="dm-seg dm-c6"><code>:</code><small></small><i></i></span><span class="dm-seg dm-c5"><code>******</code><small>password</small><i>never paste the real one</i></span><span class="dm-seg dm-c6"><code>@</code><small></small><i></i></span><span class="dm-seg dm-c3"><code>postgres.railway.internal</code><small>host</small><i>where the database lives</i></span><span class="dm-seg dm-c6"><code>:</code><small></small><i></i></span><span class="dm-seg dm-c4"><code>5432</code><small>port</small><i>which door</i></span><span class="dm-seg dm-c6"><code>/</code><small></small><i></i></span><span class="dm-seg dm-c1"><code>railway</code><small>database</small><i>which database on that server</i></span></div></div>
 
 ### ✅ What you can do
 1. `export GREETING=hello`, then `node -e "console.log(process.env.GREETING)"`. Open a new terminal and run it again — it's gone. Variables live per shell session.

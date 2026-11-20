@@ -10,19 +10,7 @@ sidebar:
 
 Debugging is a doctor's visit. **Logs** are what the patient tells me, **metrics** are the temperature and pulse, **traces** are the X-ray, and **SSH** is walking into the room myself.
 
-```text
- Something's wrong
-   │
-   ├─ Did the build fail? ──────────── yes ─▶ railway logs --build
-   │
-   ├─ Does it crash or restart? ────── yes ─▶ railway logs -n 200
-   │
-   ├─ Error page or 502? ───────────── yes ─▶ check PORT and start command,
-   │                                         railway logs --http
-   ├─ Slow? ────────────────────────── yes ─▶ railway metrics, railway trace list
-   │
-   └─ Still stuck ──────────────────────────▶ railway ssh, look around inside
-```
+<div class="dm not-content"><p class="dm-zi" style="margin-bottom:.6rem">Click any card or ⓘ to see what it means.</p><div class="dm-row"><div class="dm-ok">🚨 Something's wrong</div></div><div class="dm-row"><div class="dm-link"></div></div><div class="dm-row"><details class="dm-q"><summary><span class="dm-dia"></span>Did the build fail?</summary><div class="dm-qb"><p>The deployment never got to "running": it shows <b>Build failed</b> in <code>railway deployment list</code>.</p></div></details><div class="dm-no dm-go">yes</div><div class="dm-end dm-fix">🔍 <code>railway logs --build</code><small>what the builder printed</small></div></div><div class="dm-row"><div class="dm-link" data-l="no"></div></div><div class="dm-row"><details class="dm-q"><summary><span class="dm-dia"></span>Does it crash or restart?</summary><div class="dm-qb"><p>It builds, starts, then dies or keeps restarting. The reason is almost always in the last lines the app printed.</p></div></details><div class="dm-no dm-go">yes</div><div class="dm-end dm-fix">🔍 <code>railway logs -n 200</code><small>the last 200 lines from the app</small></div></div><div class="dm-row"><div class="dm-link" data-l="no"></div></div><div class="dm-row"><details class="dm-q"><summary><span class="dm-dia"></span>Error page or 502?</summary><div class="dm-qb"><p>A <b>502</b> means Railway's edge couldn't reach my app: usually it listens on the wrong port or the start command is wrong.</p></div></details><div class="dm-no dm-go">yes</div><div class="dm-end dm-fix">🔍 Check <code>PORT</code> and start command<small><code>railway logs --http</code> shows each request and its status</small></div></div><div class="dm-row"><div class="dm-link" data-l="no"></div></div><div class="dm-row"><details class="dm-q"><summary><span class="dm-dia"></span>Slow?</summary><div class="dm-qb"><p>It works, just slowly. Look at CPU and memory first, then follow single requests.</p></div></details><div class="dm-no dm-go">yes</div><div class="dm-end dm-fix">🔍 <code>railway metrics</code>, <code>railway trace list</code><small>metrics = pulse; traces = X-ray of one request</small></div></div><div class="dm-row"><div class="dm-link" data-l="still stuck"></div></div><div class="dm-row"><details class="dm-node"><summary><span class="dm-ico">🚪</span><span class="dm-tt"><b>Go inside <span class="dm-badge dm-you">you</span></b><small>railway ssh</small></span></summary><div class="dm-body"><p class="dm-plain"><code>railway ssh</code> opens a shell inside the running container, so I can look at files, env vars and processes myself.</p></div></details></div></div>
 
 ## Steps
 

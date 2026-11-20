@@ -5,9 +5,7 @@ description: The Git commands I need for deploying on Railway, with color types 
 
 Git is a save-point system for code. Each **commit** is a save point. **GitHub** keeps a copy online, and Railway watches GitHub: when I push to a branch, Railway rebuilds and redeploys that service.
 
-```
-my laptop ──git push──▶ GitHub ──Railway sees the push──▶ build ──▶ deploy
-```
+<div class="dm not-content"><p class="dm-zi" style="margin-bottom:.6rem">Click any card or ⓘ to see what it means.</p><div class="dm-h"><details class="dm-node"><summary><span class="dm-ico">💻</span><span class="dm-tt"><b>My laptop <span class="dm-badge dm-you">you</span></b><small>commits</small></span></summary><div class="dm-body"><p class="dm-plain">Save points I made with <code>git commit</code>.</p></div></details><div class="dm-ha"><span>git push</span></div><details class="dm-node"><summary><span class="dm-ico">🐙</span><span class="dm-tt"><b>GitHub</b><small>online copy</small></span></summary><div class="dm-body"><p class="dm-plain">Keeps a copy of the repo online and tells Railway when something new arrives.</p></div></details><div class="dm-ha"><span>Railway sees the push</span></div><details class="dm-node"><summary><span class="dm-ico">🔨</span><span class="dm-tt"><b>Build <span class="dm-badge dm-auto">auto</span></b></span></summary><div class="dm-body"><p class="dm-plain">Railway turns the code into a ready-to-run image.</p></div></details><div class="dm-ha"><span>then</span></div><div class="dm-ok">🚀 Deploy</div></div></div>
 
 Each command has a color type: 🟢 VIEW (looks only) · 🔵 CREATE (makes something new) · 🟡 EDIT (changes part) · 🟠 UPDATE (replaces or syncs as a whole) · 🔴 DELETE (can't be undone; Claude warns first).
 

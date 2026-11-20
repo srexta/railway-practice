@@ -5,10 +5,7 @@ description: Talking to servers from the terminal, with color types and AI promp
 
 `curl` is a browser without the screen. A browser sends a request and draws the page it gets back. `curl` sends the same request and prints the raw reply as text. That makes it the fastest way to answer "is my server alive, and what is it saying?"
 
-```
-curl ──request──▶ server (localhost:3000, or a Railway URL)
-     ◀──reply──── status code + headers + body
-```
+<div class="dm not-content"><p class="dm-zi" style="margin-bottom:.6rem">Click any card or ⓘ to see what it means.</p><div class="dm-h"><details class="dm-node"><summary><span class="dm-ico">⌨️</span><span class="dm-tt"><b>curl <span class="dm-badge dm-you">you</span></b><small>in my terminal</small></span></summary><div class="dm-body"><p class="dm-plain">A browser without the screen: sends a request and prints the raw reply.</p></div></details><div class="dm-pair"><div class="dm-ha"><span>request: method + URL + headers</span></div><div class="dm-ha dm-back"><span>reply: status + headers + body</span></div></div><details class="dm-node"><summary><span class="dm-ico">🖥️</span><span class="dm-tt"><b>Server</b><small>localhost:3000, or a Railway URL</small></span></summary><div class="dm-body"><p class="dm-plain">Any program listening on a port: my practice server, or my app on Railway.</p></div></details></div></div>
 
 Real-world use:
 - Checking whether a client's site or API is up, without opening a browser.
@@ -50,13 +47,7 @@ Then run curl in terminal 2 and watch terminal 1 log each visit.
 
 ### Reading `curl -i` output
 
-```text
-HTTP/1.1 200 OK                      ← status code: it worked
-Date: Tue, 17 Nov 2026 10:00:00 GMT  ← headers: info about the reply
-Content-Length: 3
-                                     ← blank line = headers end here
-hi                                   ← body: the actual content
-```
+<div class="dm not-content"><div class="dm-lines"><div class="dm-line dm-c4"><code>HTTP/1.1 200 OK</code><span><b>Status line.</b> <code>200</code> = it worked.</span></div><div class="dm-line dm-c1"><code>Date: Tue, 17 Nov 2026 10:00:00 GMT</code><span><b>Header:</b> info about the reply.</span></div><div class="dm-line dm-c1"><code>Content-Length: 3</code><span><b>Header:</b> the body is 3 bytes.</span></div><div class="dm-line dm-c6"><code>(blank line)</code><span>Headers end here.</span></div><div class="dm-line dm-c3"><code>hi</code><span><b>Body:</b> the actual content.</span></div></div></div>
 
 ## Sending (POST, PATCH, PUT, DELETE)
 
